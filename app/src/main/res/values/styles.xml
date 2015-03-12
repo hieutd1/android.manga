@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/common_background_color</item>
+    </style>
+
+    <!-- StoryList.Grid.Item -->
+    <style name="StoryGridItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/story_grid_item_height</item>
+        <item name="android:background">@color/story_grid_item_background</item>
+    </style>
+    <style name="StoryGridItem.Img">
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_margin">@dimen/story_grid_item_img_margin</item>
+    </style>
+    <style name="StoryGridItem.Name">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="StoryDetail">
+        <item name="android:textColor">@color/common_text_color</item>
+    </style>
+    <style name="StoryDetail.ChapterList"></style>
+</resources>
