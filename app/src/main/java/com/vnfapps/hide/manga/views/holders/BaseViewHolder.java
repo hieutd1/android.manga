@@ -1,15 +1,11 @@
 package com.vnfapps.hide.manga.views.holders;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.vnfapps.hide.manga.R;
-import com.vnfapps.hide.manga.controllers.RequestController;
-import com.vnfapps.hide.manga.enums.ActionType;
 import com.vnfapps.hide.manga.interfaces.ActivityAction;
 import com.vnfapps.hide.manga.models.ResponseDTO;
 import com.vnfapps.hide.manga.utils.Logger;
@@ -18,16 +14,13 @@ import com.vnfapps.hide.manga.views.fragments.ChapterDetailFragment;
 import com.vnfapps.hide.manga.views.fragments.StoryDetailFragment;
 import com.vnfapps.hide.manga.views.fragments.StoryListFragment;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
 /**
  * Created by hide on 09/03/2015.
  */
 public class BaseViewHolder {
     public static final String     TAG             = BaseViewHolder.class.getName();
-    protected final static String FRAGMENTS_INIT_TAG = "fragmentsInit";
 
     protected static final int        FRAGMENT_CONTAINER   = R.id.content;
 
@@ -97,7 +90,7 @@ public class BaseViewHolder {
 
     }
 
-    private void showFragment(String fragmentTag, String stepTag){
+    private void showFragment(String fragmentTag){
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if(currentFragment!=null){
             Logger.i(TAG + ".showFragment", currentFragment.toString());
@@ -121,15 +114,15 @@ public class BaseViewHolder {
 
 
     public void showStoryList(){
-        showFragment(StoryListFragment.TAG,ActionType.GET_STORY_LIST.getType());
+        showFragment(StoryListFragment.TAG);
     }
 
     public void showStoryDetail(){
-        showFragment(StoryDetailFragment.TAG,ActionType.GET_STORY.getType());
+        showFragment(StoryDetailFragment.TAG);
     }
 
     public void showChapterDetail(){
-        showFragment(ChapterDetailFragment.TAG, ActionType.GET_CHAPTER.getType());
+        showFragment(ChapterDetailFragment.TAG);
     }
     public void onBackPressed(){
             FragmentManager.BackStackEntry backEntry = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
