@@ -35,7 +35,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="New Text"
                     android:id="@+id/name"
                     style="@style/StoryDetail"
                     android:textColor="#ffc4fb57" />
@@ -43,14 +42,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="New Text"
                     android:id="@+id/author"
                     style="@style/StoryDetail"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="New Text"
                     android:id="@+id/categories"
                     style="@style/StoryDetail"/>
             </LinearLayout>
@@ -64,7 +61,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="New Text"
                 android:id="@+id/describle"
                 style="@style/StoryDetail"/>
         </LinearLayout>
