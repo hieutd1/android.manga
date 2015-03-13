@@ -1,2 +1,3 @@
 # android.manga
-Manga online reader for android devices
+Manga online reader for android devices<br />
+Hide
