@@ -3,7 +3,7 @@ package com.vnfapps.hide.manga.views.holders;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.FrameLayout;
 
 import com.vnfapps.hide.manga.R;
 import com.vnfapps.hide.manga.interfaces.ActivityAction;
@@ -104,7 +104,7 @@ public class BaseViewHolder {
     }
 
     public void showProgress(boolean flag){
-        ProgressBar progressBar = (ProgressBar)viewRoots.get(R.layout.activity_main).findViewById(R.id.progressBar);
+        FrameLayout progressBar = (FrameLayout)viewRoots.get(R.layout.activity_main).findViewById(R.id.progressBar);
         if(flag){
             progressBar.setVisibility(View.VISIBLE);
         }else {
@@ -125,9 +125,14 @@ public class BaseViewHolder {
         showFragment(ChapterDetailFragment.TAG);
     }
     public void onBackPressed(){
-            FragmentManager.BackStackEntry backEntry = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
-            Logger.d(TAG+".onBackPressed", backEntry.getName());
-            currentFragment = (BaseFragment)fragmentManager.findFragmentByTag(backEntry.getName());
+        FragmentManager.BackStackEntry backEntry = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
+        Logger.d(TAG+".onBackPressed", backEntry.getName());
+        currentFragment = (BaseFragment)fragmentManager.findFragmentByTag(backEntry.getName());
+        try {
+            setData(currentFragment.getData());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     public void setData(ResponseDTO responseDTO) throws Exception{
         Logger.d(TAG+".setData", "start");

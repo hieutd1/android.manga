@@ -3,4 +3,5 @@
     <color name="common_background_color">#ff000000</color>
     <color name="story_grid_item_background">#ffffffff</color>
     <color name="common_text_color">#ffffff</color>
+    <color name="common_item_press">#62b2ea</color>
 </resources>

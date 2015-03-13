@@ -2,25 +2,31 @@ package com.vnfapps.hide.manga.views.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 
 import com.vnfapps.hide.manga.R;
 import com.vnfapps.hide.manga.models.ResponseDTO;
-import com.vnfapps.hide.manga.models.Story;
 import com.vnfapps.hide.manga.utils.Logger;
 import com.vnfapps.hide.manga.views.adapters.StoryGridAdapter;
 import com.vnfapps.hide.manga.views.holders.BaseViewHolder;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
 public class StoryListFragment extends BaseFragment{
     public static final String TAG = StoryListFragment.class.getName();
     private GridView            gridView            = null;
+    private EditText            editText            = null;
+    private Button              clearQueryBtn          = null;
     private StoryGridAdapter    storyGridAdapter    = null;
 
 
@@ -36,12 +42,39 @@ public class StoryListFragment extends BaseFragment{
         try {
             root = inflater.inflate(R.layout.fragment_story_list, container, false);
             gridView = (GridView) root.findViewById(R.id.gridView);
+            editText = (EditText) root.findViewById(R.id.storySearch);
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    Logger.i(TAG + ".afterTextChanged", s.toString());
+                    storyGridAdapter.setData(fillData(responseDTO, s.toString()));
+                }
+            });
+
+            clearQueryBtn = (Button) root.findViewById(R.id.clear_text);
+            clearQueryBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    editText.setText("");
+                    storyGridAdapter.setData(responseDTO);
+                }
+            });
+
             if (storyGridAdapter == null){
                 storyGridAdapter = new StoryGridAdapter(getActivity());
             }
             gridView.setAdapter(storyGridAdapter);
             gridView.setOnItemClickListener(new OnGridItemClick());
-            //requestData(1, -1);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -59,6 +92,25 @@ public class StoryListFragment extends BaseFragment{
         }else {
             Logger.e(TAG + ".setData", "storyGridAdapter is null");
         }
+    }
+
+    private ResponseDTO fillData(ResponseDTO responseDTO, String searchQuerry){
+        ResponseDTO filledData = new ResponseDTO();
+        filledData.setData(responseDTO.toString());
+        searchQuerry = searchQuerry.toLowerCase();
+        try {
+            JSONArray stories = (JSONArray) responseDTO.response;
+            JSONArray filledStories = new JSONArray();
+            for (int i = 0; i < stories.length(); i++) {
+                if (stories.getJSONObject(i).getJSONObject(PostKeys.POST).getString(PostKeys.NAME).toLowerCase().contains(searchQuerry)){
+                    filledStories.put(stories.getJSONObject(i));
+                }
+            }
+            filledData.response = filledStories;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return filledData;
     }
 
     private class OnGridItemClick implements AdapterView.OnItemClickListener{
