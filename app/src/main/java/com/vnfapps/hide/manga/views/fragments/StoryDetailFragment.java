@@ -103,10 +103,11 @@ public class StoryDetailFragment extends BaseFragment{
             if (imageLoader != null) {
                 this.featuredImg.setImageUrl(featuredImg, imageLoader);
             }
+            chapterListAdapter.setData(this.responseDTO);
+            chapters.setSelectionAfterHeaderView();
         }catch (Exception e){
             e.printStackTrace();
         }
-        chapterListAdapter.setData(this.responseDTO);
     }
 
     private  class ShowStoryInfo implements View.OnClickListener{
