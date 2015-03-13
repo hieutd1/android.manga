@@ -1,12 +1,14 @@
 package com.vnfapps.hide.manga.views.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -120,6 +122,10 @@ public class StoryListFragment extends BaseFragment{
                 JSONObject story = (JSONObject) parent.getAdapter().getItem(position);
                 JSONObject post = story.getJSONObject(PostKeys.POST);
                 Logger.i(TAG + ".onItemClick", story.toString());
+                editText.setText("");
+                InputMethodManager imm = (InputMethodManager)view.getContext().getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 BaseViewHolder.getInstance().getActivityAction().showStoryDetail(1, -1, post.getString(PostKeys.SLUG));
             }catch (Exception e){
                 e.printStackTrace();

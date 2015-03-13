@@ -3,25 +3,42 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@color/common_background_color">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        style="@style/StoryDetail"
-        android:background="@color/common_background_color">
-
-    </ScrollView>
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/StoryDetail">
+        style="@style/StoryDetail"
+        android:id="@+id/story_info">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/name"
+                android:textColor="#ffc4fb57"
+                style="@style/StoryDetail"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <Button
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="0dp"
+                android:id="@+id/button"
+                android:layout_gravity="center|right"
+                android:background="@android:drawable/ic_menu_more"
+                android:layout_marginRight="10dp" />
+        </FrameLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/featured_img"
                 android:layout_width="160dp"
@@ -35,13 +52,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/name"
-                    style="@style/StoryDetail"
-                    android:textColor="#ffc4fb57" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/author"
                     style="@style/StoryDetail"/>
 
@@ -51,6 +61,7 @@
                     android:id="@+id/categories"
                     style="@style/StoryDetail"/>
             </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

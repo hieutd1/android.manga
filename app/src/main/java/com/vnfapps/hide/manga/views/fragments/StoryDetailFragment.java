@@ -1,16 +1,18 @@
 package com.vnfapps.hide.manga.views.fragments;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.vnfapps.hide.manga.R;
-import com.vnfapps.hide.manga.models.Post;
 import com.vnfapps.hide.manga.models.ResponseDTO;
 import com.vnfapps.hide.manga.utils.Logger;
 import com.vnfapps.hide.manga.views.adapters.ChapterListAdapter;
@@ -30,6 +32,7 @@ public class StoryDetailFragment extends BaseFragment{
     private TextView categories;
     private TextView describle;
     private ListView chapters;
+    private Button button;
     private NetworkImageView featuredImg;
     private ChapterListAdapter chapterListAdapter;
 
@@ -46,10 +49,13 @@ public class StoryDetailFragment extends BaseFragment{
             categories = (TextView)root.findViewById(R.id.categories);
             describle = (TextView)root.findViewById(R.id.describle);
             chapters = (ListView)root.findViewById(R.id.chapters);
+            button = (Button)root.findViewById(R.id.button);
             featuredImg = (NetworkImageView)root.findViewById(R.id.featured_img);
             if(chapterListAdapter==null){
                 chapterListAdapter = new ChapterListAdapter(getActivity());
             }
+            name.setOnClickListener(new ShowStoryInfo());
+            button.setOnClickListener(new ShowStoryInfo());
             chapters.setAdapter(chapterListAdapter);
             chapters.setOnItemClickListener(new OnChapterItemClick());
 
@@ -68,7 +74,7 @@ public class StoryDetailFragment extends BaseFragment{
             JSONArray storyCategories = story.getJSONArray(StoryKeys.CATEGORIES);
 
             String name = storyPost.getString(PostKeys.NAME);
-            String author = story.getString(StoryKeys.AUTHOR);
+            String author = resources.getString(R.string.author)+"\n"+story.getString(StoryKeys.AUTHOR);
             String featuredImg = story.getString(StoryKeys.FEATURED_IMG);
             String categories = "";
             String describle = storyPost.getString(PostKeys.CONTENT);
@@ -88,6 +94,7 @@ public class StoryDetailFragment extends BaseFragment{
                 JSONObject object = storyCategories.getJSONObject(i);
                 categories += object.getString(CategoryKeys.NAME) + ", ";
             }
+            categories = resources.getString(R.string.category)+categories.substring(0, categories.length()-2);
 
             this.name.setText(name);
             this.author.setText(author);
@@ -102,6 +109,27 @@ public class StoryDetailFragment extends BaseFragment{
         chapterListAdapter.setData(this.responseDTO);
     }
 
+    private  class ShowStoryInfo implements View.OnClickListener{
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v The view that was clicked.
+         */
+        @Override
+        public void onClick(View v) {
+            LinearLayout layout1 = (LinearLayout)featuredImg.getParent();
+            LinearLayout layout2 = (LinearLayout)describle.getParent();
+            if(layout1.getVisibility() == View.VISIBLE){
+                layout1.setVisibility(View.GONE);
+                layout2.setVisibility(View.GONE);
+                button.setRotation(-90.0f);
+            }else{
+                layout1.setVisibility(View.VISIBLE);
+                layout2.setVisibility(View.VISIBLE);
+                button.setRotation(0.0f);
+            }
+        }
+    }
 
     private class OnChapterItemClick implements AdapterView.OnItemClickListener{
         @Override
